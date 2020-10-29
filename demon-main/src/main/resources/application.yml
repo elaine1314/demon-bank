@@ -1,2 +1,14 @@
 server:
   port: 8089
+
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/sim_demon?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true&useSSL=false
+    username: root
+    password: Loveme1314
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  main:
+    allow-bean-definition-overriding: true
+mybatis:
+  mapperLocations: classpath:mybatis/*.xml
+  type-aliases-package: com.zxe.admin.entity
