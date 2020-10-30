@@ -10,5 +10,12 @@ spring:
   main:
     allow-bean-definition-overriding: true
 mybatis:
-  mapperLocations: classpath:mybatis/*.xml
+  mapperLocations: /Users/elaine/Project/simManager/demon/demon-admin/src/main/resources/mybatis/*.xml
   type-aliases-package: com.zxe.admin.entity
+
+# mapper
+mapper:
+    mappers:
+        - com.zxe.admin.dao
+    not-empty: false
+    identity: MYSQL
