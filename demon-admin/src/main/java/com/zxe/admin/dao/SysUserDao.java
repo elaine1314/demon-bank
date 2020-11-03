@@ -14,7 +14,6 @@ import org.springframework.stereotype.Component;
 @Mapper
 @Component
 public interface SysUserDao {
-
     /**
      * 查询用户
      * @param username

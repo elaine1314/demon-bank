@@ -23,5 +23,4 @@ public class SysUserController {
         return user.getNickname();
     }
 
-// AND status = 1
 }
