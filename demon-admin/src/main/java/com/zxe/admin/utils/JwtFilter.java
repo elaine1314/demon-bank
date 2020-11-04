@@ -1,5 +1,6 @@
 package com.zxe.admin.utils;
 
+import cn.hutool.http.server.HttpServerResponse;
 import cn.hutool.json.JSONUtil;
 import com.zxe.common.Result;
 import io.jsonwebtoken.Claims;
@@ -17,7 +18,6 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 
 /**
  * @Author:Elaine
@@ -30,15 +30,13 @@ public class JwtFilter extends AuthenticatingFilter {
     @Autowired
     JwtUtils jwtUtils;
 
-
     @Override
     protected AuthenticationToken createToken(ServletRequest servletRequest, ServletResponse servletResponse) throws Exception {
-        //  获取token
         HttpServletRequest request = (HttpServletRequest)servletRequest;
+
         String jwt = request.getHeader("Authorization");
         if(StringUtils.isEmpty(jwt)){
             return null;
-
         }
 
         return new JwtToken(jwt);
@@ -47,36 +45,36 @@ public class JwtFilter extends AuthenticatingFilter {
     @Override
     protected boolean onAccessDenied(ServletRequest servletRequest, ServletResponse servletResponse) throws Exception {
         HttpServletRequest request = (HttpServletRequest)servletRequest;
-        String token = request.getHeader("Authorization");
 
-        if (StringUtils.isEmpty(token)) {
-            return false;
+        String jwt = request.getHeader("Authorization");
+        if(StringUtils.isEmpty(jwt)){
+            return true;
         }else{
-            Claims claim = jwtUtils.getClaimByToken(token);
-            if(claim == null || jwtUtils.isTokenExpired(claim.getExpiration())){
-                throw new ExpiredCredentialsException("token已失效，请重新登录！");
+            //校验jwt
+            Claims claim = jwtUtils.getClaimByToken(jwt);
+            if(claim == null || jwtUtils.isTokenExpire(claim.getExpiration())){
+                throw new ExpiredCredentialsException("token已失效，请重新登录");
             }
+
+            //执行登录
+            return executeLogin(servletRequest,servletResponse);
         }
-        return executeLogin(servletRequest,servletResponse);
     }
 
     @Override
     protected boolean onLoginFailure(AuthenticationToken token, AuthenticationException e, ServletRequest request, ServletResponse response) {
-        HttpServletResponse httpResponse = (HttpServletResponse) response;
-        try{
-            Throwable throwable = e.getCause() == null ? e : e.getCause();
-            Result r = Result.fail(throwable.getMessage());
-            String json = JSONUtil.toJsonStr(r);
-            httpResponse.getWriter().print(json);
-        }catch (IOException e1){
-        }
+        HttpServerResponse httpServerResponse = (HttpServerResponse) response;
+        Throwable throwable = e.getCause() == null?e:e.getCause();
+        Result result = Result.fail(throwable.getMessage());
+        String json = JSONUtil.toJsonStr(result);
 
+        httpServerResponse.getWriter().print(json);
         return false;
     }
 
-
     @Override
-    protected boolean preHandle(ServletRequest request, ServletResponse response) throws Exception {
+    public boolean preHandle(ServletRequest request,ServletResponse response) throws Exception{
+
         HttpServletRequest httpServletRequest = WebUtils.toHttp(request);
         HttpServletResponse httpServletResponse = WebUtils.toHttp(response);
         httpServletResponse.setHeader("Access-control-Allow-Origin", httpServletRequest.getHeader("Origin"));
@@ -91,6 +89,5 @@ public class JwtFilter extends AuthenticatingFilter {
         return super.preHandle(request, response);
     }
 
+
 }
-
-

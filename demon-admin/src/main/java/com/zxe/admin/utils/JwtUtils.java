@@ -16,19 +16,18 @@ import java.util.Date;
  * @Date: Created in 8:39 PM 2020/11/3
  * @Version: 1.0
  */
-@Data
 @Slf4j
+@Data
 @Component
 @ConfigurationProperties(prefix = "demon.jwt")
-public class JwtUtils {
+public class JwtUtils{
     private String secret;
     private long expire;
     private String header;
 
-    /**
-     * 生成jwt token
-     */
+    // 生成jwt token
     public String generateToken(long userId){
+
         Date nowDate = new Date();
         Date expireDate = new Date(nowDate.getTime() + expire * 1000);
 
@@ -41,14 +40,11 @@ public class JwtUtils {
                 .compact();
     }
 
-    /**
-     * 获取jwt信息
-     */
-    public Claims getClaimByToken(String token) {
-        try {
+    public Claims getClaimByToken(String token){
+        try{
             return Jwts.parser()
                     .setSigningKey(secret)
-                    .parseClaimsJwt(token)
+                    .parseClaimsJws(token)
                     .getBody();
         }catch (Exception e){
             log.debug("validate is token error",e);
@@ -56,14 +52,9 @@ public class JwtUtils {
         }
     }
 
-    /**
-     * token是否过期
-     * @return  true：过期
-     */
-    public boolean isTokenExpired(Date expiration){
+    // token是否过期
+    public boolean isTokenExpire(Date expiration){
         return expiration.before(new Date());
     }
-
-
 
 }
