@@ -21,12 +21,18 @@
 	<modules>
 		<module>demon-main</module>
 		<module>demon-admin</module>
+		<module>demon-common</module>
 	</modules>
 
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<version>1.18.12</version>
 		</dependency>
 	</dependencies>
 </project>

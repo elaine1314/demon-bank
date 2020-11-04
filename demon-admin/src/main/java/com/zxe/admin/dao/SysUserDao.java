@@ -20,5 +20,13 @@ public interface SysUserDao {
      * @return
      */
     SysUserEntity findUser(@Param("username") String username);
+    /**
+     * 查询用户
+     * @param userid
+     * @return
+     */
+    SysUserEntity findUserById(@Param("userid") String userid);
+
+
 
 }

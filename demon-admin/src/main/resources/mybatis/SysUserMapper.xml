@@ -26,6 +26,9 @@
     <select id="findUser" parameterType="com.zxe.admin.entity.SysUserEntity" resultType="com.zxe.admin.entity.SysUserEntity">
         select * from sys_user where username=#{username}
     </select>
+    <select id="findUserById" parameterType="com.zxe.admin.entity.SysUserEntity" resultType="com.zxe.admin.entity.SysUserEntity">
+        select * from sys_user where id=#{userid}
+    </select>
 </mapper>
 
 

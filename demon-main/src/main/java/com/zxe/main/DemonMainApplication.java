@@ -13,5 +13,4 @@ public class DemonMainApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(DemonMainApplication.class, args);
 	}
-
 }

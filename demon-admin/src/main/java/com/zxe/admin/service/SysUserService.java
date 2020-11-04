@@ -24,4 +24,13 @@ public class SysUserService {
     public SysUserEntity findUserInfo(String username){
         return sysUserDao.findUser(username);
     }
+
+    /**
+     * 查询用户
+     * @param userid
+     * @return
+     */
+    public SysUserEntity findUserInfoById(String userid){
+        return sysUserDao.findUser(userid);
+    }
 }
