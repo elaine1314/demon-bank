@@ -80,16 +80,17 @@ public class AccountRealm extends AuthorizingRealm{
         JwtToken jwt = (JwtToken) authenticationToken;
         String userId = jwtUtils.getClaimByToken((String) jwt.getPrincipal()).getSubject();
 
-        SysUserEntity user = sysUserService.findUserInfo(userId);
-        if(user == null){
+        SysUserEntity user = sysUserService.findUserInfoById(userId);
+        if (user == null) {
             throw new UnknownAccountException("账户不存在！");
         }
-        if(user.getStatus() != 1){
+        if (user.getStatus() != 1) {
             throw new LockedAccountException("账户已被锁定！");
         }
 
 //        AccountProfile profile = new AccountProfile();
 //        BeanUtil.copyProperties(user,profile);
-        return new SimpleAuthenticationInfo(user,jwt.getCredentials(),getName());
+        AuthenticationInfo info = new SimpleAuthenticationInfo(user, jwt.getCredentials(), getName());
+        return info;
     }
 }

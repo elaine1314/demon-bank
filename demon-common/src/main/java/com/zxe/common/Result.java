@@ -10,7 +10,7 @@ import lombok.Data;
  */
 @Data
 public class Result {
-    private int code;// 200是正常，非200是异常
+    private int code;// 20000是正常，非20000是异常
     private Object data;
     private String msg;
 
@@ -24,7 +24,7 @@ public class Result {
     }
 
     public static Result succ(Object data){
-        return result(200,"操作成功",data);
+        return result(20000,"操作成功",data);
     }
 
     public static Result fail(String msg,Object data){

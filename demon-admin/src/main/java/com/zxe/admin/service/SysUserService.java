@@ -31,6 +31,6 @@ public class SysUserService {
      * @return
      */
     public SysUserEntity findUserInfoById(String userid){
-        return sysUserDao.findUser(userid);
+        return sysUserDao.findUserById(userid);
     }
 }
