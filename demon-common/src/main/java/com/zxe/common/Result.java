@@ -14,6 +14,7 @@ public class Result {
     private Object data;
     private String msg;
 
+
     public static Result result(int code,String msg,Object data){
         Result r = new Result();
         r.setCode(code);

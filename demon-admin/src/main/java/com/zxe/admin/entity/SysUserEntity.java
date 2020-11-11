@@ -1,6 +1,7 @@
 package com.zxe.admin.entity;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import java.util.Date;
 
@@ -11,6 +12,7 @@ import java.util.Date;
  * @Version: 1.0
  */
 @Data
+@EqualsAndHashCode(callSuper = false)
 public class SysUserEntity {
     private static final long serialVersionUID = 5088697673359856350L;
     private String username;
@@ -32,4 +34,5 @@ public class SysUserEntity {
     private Long id;
     private Date createTime;
     private Date updateTime;
+    private String type;
 }

@@ -5,6 +5,8 @@ import com.zxe.admin.entity.SysUserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * @Author:Elaine
  * @Description:
@@ -32,5 +34,31 @@ public class SysUserService {
      */
     public SysUserEntity findUserInfoById(String userid){
         return sysUserDao.findUserById(userid);
+    }
+    /**
+     * 返回所有用户
+     * @param
+     * @return
+     */
+    public List<SysUserEntity> searchAllUser(){
+        return sysUserDao.searchAllUser();
+    }
+
+    /**
+     * 返回所有用户
+     * @param
+     * @return
+     */
+    public Integer updateSysUserInfo(SysUserEntity entity){
+        return sysUserDao.updateSysUserInfo(entity);
+    }
+
+    /**
+     * 删除用户
+     * @param
+     * @return
+     */
+    public Integer deleteUserInfo(String id){
+        return sysUserDao.deleteUserInfo(id);
     }
 }

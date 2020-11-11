@@ -5,6 +5,8 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 /**
  * @Author:Elaine
  * @Description:
@@ -26,6 +28,19 @@ public interface SysUserDao {
      * @return
      */
     SysUserEntity findUserById(@Param("userid") String userid);
+    /**
+     * 查询所有用户
+     * @return
+     */
+    List<SysUserEntity> searchAllUser();
+    /**
+     * 更新用户信息
+     */
+    Integer updateSysUserInfo(@Param("user") SysUserEntity user);
+    /**
+     * 删除用户
+     */
+    Integer deleteUserInfo(@Param("id") String id);
 
 
 

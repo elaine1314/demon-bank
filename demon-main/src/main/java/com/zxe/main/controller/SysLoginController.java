@@ -27,7 +27,7 @@ import java.util.Map;
  */
 @RestController
 @RequestMapping("/user")
-public class SysUserController {
+public class SysLoginController {
     @Autowired
     private SysUserService sysUserService;
 

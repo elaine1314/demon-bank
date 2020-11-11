@@ -6,6 +6,8 @@ Spring:
 mybatis:
   mapperLocations: classpath:/mybatis/*.xml
   type-aliases-package: com.zxe.admin.entity
+#  configuration:
+#    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 
 # mapper
 mapper:
@@ -26,5 +28,5 @@ demon:
     secret: f4e2e52034348f86b67cde581c0f9eb5
     # token有效时长，7天，单位秒
     expire: 60480000
-    header: token
+    header: toke
 
