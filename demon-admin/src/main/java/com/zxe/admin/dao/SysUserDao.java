@@ -41,7 +41,8 @@ public interface SysUserDao {
      * 删除用户
      */
     Integer deleteUserInfo(@Param("id") String id);
-
-
-
+    /**
+     * 插入用户
+     */
+    Integer insertUserInfo(@Param("user") SysUserEntity user);
 }

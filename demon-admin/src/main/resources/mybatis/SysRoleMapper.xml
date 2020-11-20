@@ -65,4 +65,7 @@
 		ur.user_id = #{userId}
 		AND r.available = 1
 	</select>
+	<select id="searchAllRoles" resultMap="rm">
+		SELECT id,name,description from sys_role where available = 1
+	</select>
 </mapper>

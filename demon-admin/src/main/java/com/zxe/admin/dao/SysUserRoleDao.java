@@ -1,5 +1,6 @@
 package com.zxe.admin.dao;
 
+import com.zxe.admin.entity.SysUserRoleEntity;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Component;
@@ -19,5 +20,22 @@ public interface SysUserRoleDao {
      * @return
      */
     Integer findUserIdByRoleId(@Param("roleId") Long roleId);
-
+    /**
+     * 查询角色
+     * @param userId
+     * @return
+     */
+    SysUserRoleEntity findUserRoledId(@Param("userId") Long userId);
+    /**
+     * 插入角色信息
+     * @param role
+     * @return
+     */
+    Integer insertRolesInfo(@Param("role") SysUserRoleEntity role);
+    /**
+     * 更新角色信息
+     * @param role
+     * @return
+     */
+    Integer updateRolesInfo(@Param("role") SysUserRoleEntity role);
 }

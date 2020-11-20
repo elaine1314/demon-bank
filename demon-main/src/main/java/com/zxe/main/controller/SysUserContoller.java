@@ -80,4 +80,31 @@ public class SysUserContoller {
             return Result.fail(entity.getUsername() + "用户无法被删除");
         }
     }
+
+    @RequiresPermissions("user:add")
+    @PostMapping(value = "/addUser")
+    public Result addUser(@RequestBody JSONObject data){
+        SysUserEntity user = new SysUserEntity();
+        user.setUsername(data.getStr("username"));
+        user.setPassword(data.getStr("password"));
+        user.setNickname(data.getStr("nickname"));
+        user.setMobile(data.getStr("mobile"));
+        user.setEmail(data.getStr("email"));
+
+        SysUserEntity userInfo = sysUserService.findUserInfo(data.getStr("username"));
+        if (userInfo != null) {
+            return Result.fail("该用户名[" + userInfo.getUsername() + "]已存在！请更改用户名");
+        }else{
+            try {
+                user.setPassword(PasswordUtils.encrypt(user.getPassword(),user.getUsername()));
+                sysUserService.inserUserInfo(user);
+                return Result.succ(user);
+
+            } catch (Exception e) {
+                e.printStackTrace();
+                return Result.succ("插入失败");
+            }
+        }
+
+    }
 }

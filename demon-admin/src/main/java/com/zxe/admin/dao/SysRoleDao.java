@@ -21,4 +21,8 @@ public interface SysRoleDao {
      * 通过ID获取角色
      */
     List<SysRoleEntity> listRolesByUserId(@Param("userId") Long userId);
+    /**
+     * 获取所有角色描述和名称
+     */
+    List<SysRoleEntity> searchAllRoles();
 }

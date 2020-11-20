@@ -17,4 +17,19 @@
         WHERE
             role_id = #{roleId}
     </select>
+    <select id="findUserRoledId" parameterType="string" resultType="com.zxe.admin.entity.SysUserRoleEntity">
+        SELECT
+        role_id,user_id,id
+        FROM
+        sys_user_role
+        WHERE
+        user_id = #{userId}
+    </select>
+    <insert id="insertRolesInfo" parameterType="com.zxe.admin.entity.SysUserRoleEntity">
+        INSERT INTO `sys_user_role` ( `user_id`, `role_id`)
+        VALUES ( #{role.user_id}, #{role.role_id});
+    </insert>
+    <update id="updateRolesInfo" parameterType="com.zxe.admin.entity.SysUserRoleEntity">
+       UPDATE `sys_user_role` SET role_id = #{role.role_id} WHERE user_id = #{role.user_id}
+    </update>
 </mapper>

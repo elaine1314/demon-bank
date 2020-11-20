@@ -61,4 +61,13 @@ public class SysUserService {
     public Integer deleteUserInfo(String id){
         return sysUserDao.deleteUserInfo(id);
     }
+
+    /**
+     * 插入用户信息
+     * @param
+     * @return
+     */
+    public Integer inserUserInfo(SysUserEntity entity){
+        return sysUserDao.insertUserInfo(entity);
+    }
 }

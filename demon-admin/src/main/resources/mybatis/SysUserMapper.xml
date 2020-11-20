@@ -24,7 +24,7 @@
         <result property="type" jdbcType="VARCHAR" column="type"/>
 
     </resultMap>
-    
+
     <select id="findUser" parameterType="com.zxe.admin.entity.SysUserEntity" resultMap="user">
         select * from sys_user where username=#{username}
     </select>
@@ -49,7 +49,12 @@
     <delete id="deleteUserInfo" parameterType="string">
         DELETE from sys_user where id=#{id}
     </delete>
+    <insert id="insertUserInfo" parameterType="com.zxe.admin.entity.SysUserEntity">
+        INSERT INTO `sys_user` (`username`, `password`, `nickname`, `mobile`, `email`,`status`)
+VALUES
+	(#{user.username},#{user.password},#{user.nickname},#{user.mobile},#{user.email},1);
 
+    </insert>
 
 </mapper>
 
