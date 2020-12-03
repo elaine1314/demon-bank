@@ -194,5 +194,8 @@
             re.parent_id ASC,
             re.sort ASC
 	</select>
+    <select id="getResourcesInfo" resultMap="rm">
+       SELECT re.id, re.`name`, re.parent_id, re.url, re.type , re.icon FROM sys_resources re ORDER BY re.sort ASC
+    </select>
 </mapper>
 

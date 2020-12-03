@@ -46,6 +46,9 @@
     <update id="updateSysUserInfo" parameterType="com.zxe.admin.entity.SysUserEntity">
         update sys_user s set s.username=#{user.username},s.`password`=#{user.password},s.nickname=#{user.nickname},s.`mobile`=#{user.mobile},s.`email`=#{user.email} where s.id = #{user.id}
     </update>
+    <update id="updateSysUserType" >
+        update sys_user s set s.user_type=#{user.userType} where s.id = #{user.id} and s.user_type=#{userType}
+    </update>
     <delete id="deleteUserInfo" parameterType="string">
         DELETE from sys_user where id=#{id}
     </delete>

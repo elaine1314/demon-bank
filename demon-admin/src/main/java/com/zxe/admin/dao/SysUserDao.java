@@ -45,4 +45,8 @@ public interface SysUserDao {
      * 插入用户
      */
     Integer insertUserInfo(@Param("user") SysUserEntity user);
+    /**
+     * 更新user_type
+     */
+    Integer updateSysUserType(@Param("user") SysUserEntity user,@Param("userType") String userType);
 }

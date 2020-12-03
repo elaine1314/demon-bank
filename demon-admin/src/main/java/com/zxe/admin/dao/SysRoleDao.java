@@ -22,7 +22,27 @@ public interface SysRoleDao {
      */
     List<SysRoleEntity> listRolesByUserId(@Param("userId") Long userId);
     /**
+     * 获取所有可用的角色描述和名称
+     */
+    List<SysRoleEntity> searchAvailabeRoles();
+    /**
      * 获取所有角色描述和名称
      */
     List<SysRoleEntity> searchAllRoles();
+    /**
+     * 通过ID获取角色
+     */
+    SysRoleEntity searchOneRoleByUseId(@Param("roleId") Long roleId);
+    /**
+     * 插入用户角色
+     */
+    Integer insertRoles(@Param("roles") SysRoleEntity roles);
+    /**
+     * 查找用户角色通过name
+     */
+    SysRoleEntity searchOneRoleByName(@Param("name") String name);
+    /**
+     * 编辑用户角色sys_role
+     */
+    Integer editRoleInfo(@Param("roles") SysRoleEntity roles);
 }

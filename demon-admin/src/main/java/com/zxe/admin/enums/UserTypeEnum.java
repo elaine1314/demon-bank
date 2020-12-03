@@ -28,7 +28,7 @@ import org.springframework.util.StringUtils;
 public enum UserTypeEnum {
     ROOT("超级管理员"),
     ADMIN("管理员"),
-    USER("系统会员"),
+    USER("一般用户"),
     UNKNOW("未知");
     private String desc;
 
@@ -41,7 +41,7 @@ public enum UserTypeEnum {
             return UserTypeEnum.UNKNOW;
         }
         for (UserTypeEnum ut : UserTypeEnum.values()) {
-            if (ut.toString().equalsIgnoreCase(type)) {
+            if (ut.getDesc().equalsIgnoreCase(type)) {
                 return ut;
             }
         }

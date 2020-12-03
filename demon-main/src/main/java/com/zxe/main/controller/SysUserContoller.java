@@ -4,6 +4,8 @@ import cn.hutool.json.JSONObject;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.zxe.admin.entity.SysUserEntity;
+import com.zxe.admin.entity.SysUserRoleEntity;
+import com.zxe.admin.service.SysRoleService;
 import com.zxe.admin.service.SysUserService;
 import com.zxe.common.Result;
 import com.zxe.common.utils.PasswordUtils;
@@ -26,6 +28,8 @@ public class SysUserContoller {
 
     @Autowired
     SysUserService sysUserService;
+    @Autowired
+    SysRoleService sysRoleService;
 
     @RequiresAuthentication
     @GetMapping("/userList")
@@ -73,6 +77,10 @@ public class SysUserContoller {
     @GetMapping(value = "/delete")
     public Result delete(@RequestParam String id) {
         SysUserEntity entity = sysUserService.findUserInfoById(id);
+        SysUserRoleEntity roleEntity = sysRoleService.findUserRoledId(Long.parseLong(id));
+        if(roleEntity !=null){
+            sysRoleService.deleteRolesInfo(Long.parseLong(id));
+        }
         Integer result = sysUserService.deleteUserInfo(id);
         if(result == 1){
             return Result.succ(entity.getUsername() + "用户被删除");

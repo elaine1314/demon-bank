@@ -26,4 +26,13 @@ public class SysResourceService {
     public List<SysResourceEntity> listByUserId(Long userId){
         return sysResourceDao.listByUserId(userId);
     }
+    /**
+     * 获取所有资源
+     * @return
+     */
+    public List<SysResourceEntity> getAllResourceInfo(){
+
+    }
+
+
 }

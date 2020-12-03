@@ -65,7 +65,26 @@
 		ur.user_id = #{userId}
 		AND r.available = 1
 	</select>
-	<select id="searchAllRoles" resultMap="rm">
-		SELECT id,name,description from sys_role where available = 1
+	<select id="searchAvailabeRoles" resultMap="rm">
+		SELECT id,name,description,available from sys_role WHERE available = 1
 	</select>
+	<select id="searchAllRoles" resultMap="rm">
+		SELECT id,name,description,available from sys_role order by create_time asc
+	</select>
+	<select id="searchOneRoleByUseId" parameterType="Long" resultType="com.zxe.admin.entity.SysRoleEntity">
+		SELECT id,name,description,available FROM sys_role WHERE id = #{roleId}
+	</select>
+	<insert id="insertRoles" parameterType="com.zxe.admin.entity.SysRoleEntity">
+		INSERT INTO `sys_role` (`name`, `description`, `available`,`update_time`)
+VALUES ( #{roles.name}, #{roles.description}, #{roles.available}, #{roles.updateTime});
+	</insert>
+	<select id="searchOneRoleByName" parameterType="String" resultType="com.zxe.admin.entity.SysRoleEntity">
+		SELECT id,name,description,available FROM sys_role WHERE name = #{name}
+	</select>
+	<update id="editRoleInfo" parameterType="com.zxe.admin.entity.SysRoleEntity">
+		update `sys_role` set `name`=#{roles.name}, `description`=#{roles.description}, `available`=#{roles.available},`update_time`=#{roles.updateTime} where id=#{roles.id}
+	</update>
+	<delete id="deleteRolesInfo" parameterType="Long">
+		delete `sys_user_role`,sys_role from `sys_user_role`,sys_role where sys_user_role.role_id = sys_role.id and sys_role.id=#{id};
+	</delete>
 </mapper>

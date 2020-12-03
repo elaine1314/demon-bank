@@ -4,7 +4,6 @@ import com.zxe.admin.dao.SysRoleDao;
 import com.zxe.admin.dao.SysUserRoleDao;
 import com.zxe.admin.entity.SysRoleEntity;
 import com.zxe.admin.entity.SysUserRoleEntity;
-import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -40,6 +39,13 @@ public class SysRoleService {
     }
 
     /**
+     * 获取所有可用的角色描述和名称
+     */
+    public List<SysRoleEntity> getAvailabeRoles(){
+        return sysRoleDao.searchAvailabeRoles();
+    }
+
+    /**
      * 获取所有角色名称和描述
      * @return
      */
@@ -57,8 +63,42 @@ public class SysRoleService {
      * 更新role id
      * @return
      */
-    public SysUserRoleEntity findUserRoledId(@Param("userId") Long userId){
+    public SysUserRoleEntity findUserRoledId(Long userId){
         return sysUserRoleDao.findUserRoledId(userId);
     }
-
+    /**
+     * 获取roles通过roles id
+     * @return
+     */
+    public SysRoleEntity searchOneRoleByUseId(Long roleId){
+        return sysRoleDao.searchOneRoleByUseId(roleId);
+    }
+    /**
+     * 删除用户角色
+     * @return
+     */
+    public Integer deleteRolesInfo(Long userId){
+        return sysUserRoleDao.deleteRolesInfo(userId);
+    }
+    /**
+     * 插入用户角色
+     * @return
+     */
+    public Integer insertRoles(SysRoleEntity roleEntity){
+        return sysRoleDao.insertRoles(roleEntity);
+    }
+    /**
+     * 查找用户角色通过name
+     *
+     * @return
+     */
+    public SysRoleEntity searchOneRoleByName(String name) {
+        return sysRoleDao.searchOneRoleByName(name);
+    }
+    /**
+     * 编辑用户角色sys_role
+     */
+    public Integer editRoleInfo(SysRoleEntity roleEntity) {
+        return sysRoleDao.editRoleInfo(roleEntity);
+    }
 }

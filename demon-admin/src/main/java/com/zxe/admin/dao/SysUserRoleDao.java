@@ -38,4 +38,10 @@ public interface SysUserRoleDao {
      * @return
      */
     Integer updateRolesInfo(@Param("role") SysUserRoleEntity role);
+    /**
+     * 删除角色信息
+     * @param userId
+     * @return
+     */
+    Integer deleteRolesInfo(@Param("userId") Long userId);
 }

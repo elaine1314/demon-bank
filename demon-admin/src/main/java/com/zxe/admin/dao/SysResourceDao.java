@@ -20,4 +20,8 @@ public interface SysResourceDao {
      * 通过ID获取权限
      */
     List<SysResourceEntity> listByUserId(@Param("userId") Long userId);
+    /**
+     * 获取所有资源
+     */
+    List<SysResourceEntity> getResourcesInfo();
 }
