@@ -9,5 +9,36 @@
 		<result property="createTime" jdbcType="TIMESTAMP" column="create_time"/>
 		<result property="updateTime" jdbcType="TIMESTAMP" column="update_time"/>
 	</resultMap>
+	<select id="queryResourcesListWithSelected" parameterType="Long" resultMap="rm">
+		SELECT
+            re.id,
+            re.`name`,
+            re.parent_id,
+            re.url,
+            re.type,
+            re.icon,
+            (
+                CASE
+                WHEN EXISTS (
+                    SELECT
+                        1
+                    FROM
+                        sys_role_resources rr
+                    WHERE
+                        rr.resources_id = re.id
+                    AND rr.role_id = #{rid}
+                )
+                    THEN
+                        'true'
+                    ELSE
+                        'false'
+                    END
+            ) AS checked
+        FROM
+            sys_resources re
+        ORDER BY
+            re.sort ASC
+	</select>
+
 </mapper>
 

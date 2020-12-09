@@ -24,4 +24,8 @@ public interface SysResourceDao {
      * 获取所有资源
      */
     List<SysResourceEntity> getResourcesInfo();
+    /**
+     * 获取资源类型为menu
+     */
+//    List<SysResourceEntity> getResourcesMenuInfo();
 }
