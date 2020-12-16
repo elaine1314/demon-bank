@@ -12,6 +12,7 @@ import com.zxe.admin.service.SysRoleService;
 import com.zxe.admin.service.SysUserService;
 import com.zxe.common.Result;
 import com.zxe.common.utils.PasswordUtils;
+import org.apache.ibatis.annotations.Param;
 import org.apache.shiro.authz.annotation.Logical;
 import org.apache.shiro.authz.annotation.RequiresAuthentication;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -37,7 +38,13 @@ public class SysResourceContoller {
     @GetMapping("/resourceList")
     public Result resourceList(){
         JSONArray result  = sysResourceService.getAllResourceInfo();
+        return Result.succ(result);
+    }
 
+    @RequiresPermissions("resources")
+    @GetMapping("/userOwnerPression")
+    public Result userOwnerPression(@RequestParam Long rid){
+        List<Long> result = sysResourceService.getUserResourceId(rid);
         return Result.succ(result);
     }
 }

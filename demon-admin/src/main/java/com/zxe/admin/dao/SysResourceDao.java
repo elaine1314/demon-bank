@@ -25,7 +25,11 @@ public interface SysResourceDao {
      */
     List<SysResourceEntity> getResourcesInfo();
     /**
-     * 获取资源类型为menu
+     * 获取资源类型为menu的可用的值
      */
-//    List<SysResourceEntity> getResourcesMenuInfo();
+    List<SysResourceEntity> listAllAvailableMenu();
+    /**
+     * 通过Parent_id获取数据
+     */
+    List<SysResourceEntity> listMenuResourceByPid(@Param("pid") Long pid);
 }

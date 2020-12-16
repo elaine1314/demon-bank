@@ -2,6 +2,7 @@ package com.zxe.admin.entity;
 
 import lombok.Data;
 
+import javax.persistence.Transient;
 import java.util.Date;
 
 /**
@@ -25,4 +26,11 @@ public class SysResourceEntity {
     private String icon;
     private Date createTime;
     private Date updateTime;
+
+//    @Transient
+//    private String checked;
+    @Transient
+    private Long nodeId;
+    @Transient
+    private String nodeName;
 }

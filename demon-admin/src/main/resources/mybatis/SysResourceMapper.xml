@@ -13,28 +13,31 @@
         <result property="external" jdbcType="BIT" column="external"/>
         <result property="available" jdbcType="BIT" column="available"/>
         <result property="icon" jdbcType="VARCHAR" column="icon"/>
-        <!--<result property="checked" jdbcType="VARCHAR" column="checked"/>-->
-        <!--<association property="parent" javaType="com.zyd.shiro.persistence.beans.SysResources">-->
-            <!--<result property="id" jdbcType="BIGINT" column="parent_id"/>-->
-            <!--<result property="name" jdbcType="VARCHAR" column="parent_name"/>-->
-            <!--<result property="type" jdbcType="VARCHAR" column="parent_type"/>-->
-            <!--<result property="url" jdbcType="VARCHAR" column="parent_url"/>-->
-            <!--<result property="parentId" jdbcType="BIGINT" column="parent_parent_id"/>-->
-            <!--<result property="permission" jdbcType="VARCHAR" column="parent_permission"/>-->
-            <!--<result property="available" jdbcType="BIT" column="parent_available"/>-->
-            <!--<result property="icon" jdbcType="VARCHAR" column="parent_icon"/>-->
-        <!--</association>-->
-        <!--<collection property="nodes" column="node_id" javaType="ArrayList" ofType="com.zyd.shiro.persistence.beans.SysResources">-->
-            <!--<result property="id" jdbcType="BIGINT" column="node_id"/>-->
-            <!--<result property="name" jdbcType="VARCHAR" column="node_name"/>-->
-            <!--<result property="type" jdbcType="VARCHAR" column="node_type"/>-->
-            <!--<result property="url" jdbcType="VARCHAR" column="node_url"/>-->
-            <!--<result property="parentId" jdbcType="BIGINT" column="node_parent_id"/>-->
-            <!--<result property="permission" jdbcType="VARCHAR" column="node_permission"/>-->
-            <!--<result property="available" jdbcType="BIT" column="node_available"/>-->
-            <!--<result property="external" jdbcType="BIT" column="node_external"/>-->
-            <!--<result property="icon" jdbcType="VARCHAR" column="node_icon"/>-->
-        <!--</collection>-->
+<!--        <result property="checked" jdbcType="VARCHAR" column="checked"/>-->
+        <result property="nodeId" jdbcType="BIGINT" column="node_id" />
+        <result property="nodeName" jdbcType="VARCHAR" column="node_name" />
+
+        <!--        <association property="parent" javaType="com.zyd.shiro.persistence.beans.SysResources">-->
+<!--            <result property="id" jdbcType="BIGINT" column="parent_id"/>-->
+<!--            <result property="name" jdbcType="VARCHAR" column="parent_name"/>-->
+<!--            <result property="type" jdbcType="VARCHAR" column="parent_type"/>-->
+<!--            <result property="url" jdbcType="VARCHAR" column="parent_url"/>-->
+<!--            <result property="parentId" jdbcType="BIGINT" column="parent_parent_id"/>-->
+<!--            <result property="permission" jdbcType="VARCHAR" column="parent_permission"/>-->
+<!--            <result property="available" jdbcType="BIT" column="parent_available"/>-->
+<!--            <result property="icon" jdbcType="VARCHAR" column="parent_icon"/>-->
+<!--        </association>-->
+<!--        <collection property="nodes" column="node_id" javaType="ArrayList" ofType="com.zyd.shiro.persistence.beans.SysResources">-->
+<!--            <result property="id" jdbcType="BIGINT" column="node_id"/>-->
+<!--            <result property="name" jdbcType="VARCHAR" column="node_name"/>-->
+<!--            <result property="type" jdbcType="VARCHAR" column="node_type"/>-->
+<!--            <result property="url" jdbcType="VARCHAR" column="node_url"/>-->
+<!--            <result property="parentId" jdbcType="BIGINT" column="node_parent_id"/>-->
+<!--            <result property="permission" jdbcType="VARCHAR" column="node_permission"/>-->
+<!--            <result property="available" jdbcType="BIT" column="node_available"/>-->
+<!--            <result property="external" jdbcType="BIT" column="node_external"/>-->
+<!--            <result property="icon" jdbcType="VARCHAR" column="node_icon"/>-->
+<!--        </collection>-->
     </resultMap>
     <!--<select id="findPageBreakByCondition" parameterType="com.zyd.shiro.business.vo.ResourceConditionVO" resultMap="rm">-->
         <!--SELECT-->
@@ -108,71 +111,71 @@
             <!--node.sort ASC-->
     <!--</select>-->
 
-    <!--<select id="queryResourcesListWithSelected" parameterType="Long" resultMap="rm">-->
-		<!--SELECT-->
-            <!--re.id,-->
-            <!--re.`name`,-->
-            <!--re.parent_id,-->
-            <!--re.url,-->
-            <!--re.type,-->
-            <!--re.icon,-->
-            <!--(-->
-                <!--CASE-->
-                <!--WHEN EXISTS (-->
-                    <!--SELECT-->
-                        <!--1-->
-                    <!--FROM-->
-                        <!--sys_role_resources rr-->
-                    <!--WHERE-->
-                        <!--rr.resources_id = re.id-->
-                    <!--AND rr.role_id = #{rid}-->
-                <!--)-->
-                    <!--THEN-->
-                        <!--'true'-->
-                    <!--ELSE-->
-                        <!--'false'-->
-                    <!--END-->
-            <!--) AS checked-->
-        <!--FROM-->
-            <!--sys_resources re-->
-        <!--ORDER BY-->
-            <!--re.sort ASC-->
-	<!--</select>-->
+<!--    <select id="queryResourcesListWithSelected" parameterType="Long" resultMap="rm">-->
+<!--		SELECT-->
+<!--            re.id,-->
+<!--            re.`name`,-->
+<!--            re.parent_id,-->
+<!--            re.url,-->
+<!--            re.type,-->
+<!--            re.icon,-->
+<!--            (-->
+<!--                CASE-->
+<!--                WHEN EXISTS (-->
+<!--                    SELECT-->
+<!--                        1-->
+<!--                    FROM-->
+<!--                        sys_role_resources rr-->
+<!--                    WHERE-->
+<!--                        rr.resources_id = re.id-->
+<!--                    AND rr.role_id = #{rid}-->
+<!--                )-->
+<!--                    THEN-->
+<!--                        'true'-->
+<!--                    ELSE-->
+<!--                        'false'-->
+<!--                    END-->
+<!--            ) AS checked-->
+<!--        FROM-->
+<!--            sys_resources re-->
+<!--        ORDER BY-->
+<!--            re.sort ASC-->
+<!--	</select>-->
 
-    <!--<select id="listAllAvailableMenu" resultMap="rm">-->
-		<!--SELECT-->
-            <!--r.id,-->
-            <!--r.`name`,-->
-            <!--node.id AS node_id,-->
-            <!--node.`name` AS node_name,-->
-            <!--node.parent_id-->
-        <!--FROM-->
-            <!--sys_resources r-->
-        <!--LEFT JOIN sys_resources node ON (-->
-            <!--node.parent_id = r.id-->
-            <!--AND node.available = 1-->
-            <!--AND node.type = 'menu'-->
-        <!--)-->
-        <!--WHERE-->
-            <!--r.available = 1-->
-        <!--AND r.type = 'menu'-->
-        <!--AND (r.url IS NULL OR r.url = '')-->
-        <!--AND (r.permission IS NULL OR r.permission = '')-->
-        <!--ORDER BY-->
-            <!--r.sort ASC,-->
-            <!--node.sort ASC-->
-	<!--</select>-->
+    <select id="listAllAvailableMenu" resultMap="rm">
+		SELECT
+            r.id,
+            r.`name`,
+            node.id AS node_id,
+            node.`name` AS node_name,
+            node.parent_id
+        FROM
+            sys_resources r
+        LEFT JOIN sys_resources node ON (
+            node.parent_id = r.id
+            AND node.available = 1
+            AND node.type = 'menu'
+        )
+        WHERE
+            r.available = 1
+        AND r.type = 'menu'
+        AND (r.url IS NULL OR r.url = '')
+        AND (r.permission IS NULL OR r.permission = '')
+        ORDER BY
+            r.sort ASC,
+            node.sort ASC
+	</select>
 
-    <!--<select id="listMenuResourceByPid" parameterType="Long" resultMap="rm">-->
-		<!--SELECT-->
-            <!--re.id,-->
-            <!--re.`name`-->
-        <!--FROM-->
-            <!--sys_resources re-->
-        <!--WHERE re.parent_id = #{pid}-->
-        <!--ORDER BY-->
-            <!--re.sort ASC-->
-	<!--</select>-->
+    <select id="listMenuResourceByPid" parameterType="Long" resultMap="rm">
+		SELECT
+            re.id,
+            re.`name`
+        FROM
+            sys_resources re
+        WHERE re.parent_id = #{pid}
+        ORDER BY
+            re.sort ASC
+	</select>
 
     <select id="listByUserId" parameterType="Long" resultMap="rm">
 		SELECT
@@ -195,7 +198,7 @@
             re.sort ASC
 	</select>
     <select id="getResourcesInfo" resultMap="rm">
-       SELECT re.id, re.`name`, re.parent_id, re.url, re.type , re.icon FROM sys_resources re ORDER BY re.sort ASC
+       SELECT re.id, re.`name`, re.parent_id, re.url, re.type , re.icon FROM sys_resources re where re.available = 1 ORDER BY re.sort ASC
     </select>
 
 </mapper>
