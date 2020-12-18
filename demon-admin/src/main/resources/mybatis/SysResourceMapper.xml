@@ -182,6 +182,7 @@
             re.id,
             re.`name`,
             re.parent_id,
+            re.type,
             re.url,
             re.permission,
             re.icon,
@@ -200,6 +201,10 @@
     <select id="getResourcesInfo" resultMap="rm">
        SELECT re.id, re.`name`, re.parent_id, re.url, re.type , re.icon FROM sys_resources re where re.available = 1 ORDER BY re.sort ASC
     </select>
+
+    <select id="getParentNode" parameterType="Long" resultMap="rm">
+       SELECT re.id, re.`name`, re.parent_id, re.url, re.type , re.icon FROM sys_resources re where re.available = 1 and re.id=#{id}
+	</select>
 
 </mapper>
 

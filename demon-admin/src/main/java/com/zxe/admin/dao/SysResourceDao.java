@@ -32,4 +32,8 @@ public interface SysResourceDao {
      * 通过Parent_id获取数据
      */
     List<SysResourceEntity> listMenuResourceByPid(@Param("pid") Long pid);
+    /**
+     * 通过节点获取parent_id数据
+     */
+    SysResourceEntity getParentNode(@Param("id") Long id);
 }

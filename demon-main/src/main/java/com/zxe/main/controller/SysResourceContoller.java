@@ -1,24 +1,13 @@
 package com.zxe.main.controller;
 
 import cn.hutool.json.JSONArray;
-import cn.hutool.json.JSONObject;
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
-import com.zxe.admin.entity.SysResourceEntity;
-import com.zxe.admin.entity.SysUserEntity;
-import com.zxe.admin.entity.SysUserRoleEntity;
 import com.zxe.admin.service.SysResourceService;
-import com.zxe.admin.service.SysRoleService;
-import com.zxe.admin.service.SysUserService;
 import com.zxe.common.Result;
-import com.zxe.common.utils.PasswordUtils;
-import org.apache.ibatis.annotations.Param;
-import org.apache.shiro.authz.annotation.Logical;
-import org.apache.shiro.authz.annotation.RequiresAuthentication;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -46,5 +35,19 @@ public class SysResourceContoller {
     public Result userOwnerPression(@RequestParam Long rid){
         List<Long> result = sysResourceService.getUserResourceId(rid);
         return Result.succ(result);
+    }
+
+    @RequiresPermissions("resources")
+    @GetMapping("/saveResource")
+    public Result saveResource(@RequestParam Long rid, @RequestParam(value = "list") Long[] list){
+        System.out.println(rid);
+        List<Long> formateList = new ArrayList<>();
+        for(Long l:list) {
+            formateList.add(l);
+        }
+//        List<Long> list = (List<Long>) data.get("nodeIdsList");
+////        System.out.println(Long.getLong(data.getStr("rid")));
+        Integer flag = sysResourceService.saveRoleResourrceRelation(rid,formateList);
+        return Result.succ("flag");
     }
 }

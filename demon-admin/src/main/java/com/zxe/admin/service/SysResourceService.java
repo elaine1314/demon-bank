@@ -7,14 +7,12 @@ import com.zxe.admin.dao.SysResourceDao;
 import com.zxe.admin.dao.SysRoleResourceDao;
 import com.zxe.admin.entity.SysResourceEntity;
 import com.zxe.admin.entity.SysRoleResourceEntity;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 /**
@@ -57,18 +55,6 @@ public class SysResourceService {
     public JSONArray getAllResourceInfo(){
         // 全部Menu列表
         List<SysResourceEntity> listAllAvailableMenu = listAllAvailableMenu();
-//        // 通过userId获取权限
-//        List<SysResourceEntity> listByUserId = sysResourceDao.listByUserId(rid);
-//        // 获取所有信息
-//        List<SysResourceEntity> getAllResourceInfo = sysResourceDao.getResourcesInfo();
-
-//        for(SysResourceEntity aEntity:getAllResourceInfo){
-//            for(SysResourceEntity sEntity:listByUserId){
-//                if(aEntity.getId() == sEntity.getId()){
-//                    aEntity.setChecked("selected");
-//                }
-//            }
-//        }
 
         JSONArray jsonArray = new JSONArray();
         for(SysResourceEntity availableMenu : listAllAvailableMenu){
@@ -84,13 +70,11 @@ public class SysResourceService {
             for (SysResourceEntity entity : chList) {
                 JSONObject entityObject = new JSONObject();
                 entityObject.put("id", entity.getId());
-//                entityObject.put("checked", getCheckboxState(getAllResourceInfo, entity.getId()));
                 entityObject.put("name", entity.getName());
                 secChildrenArr.add(entityObject);
             }
 
             childrenObject.put("id", availableMenu.getNodeId().toString());
-//            childrenObject.put("checked", getCheckboxState(getAllResourceInfo, availableMenu.getNodeId()));
             childrenObject.put("name", availableMenu.getNodeName());
             childrenObject.put("children", secChildrenArr);
             childrenArr.put(childrenObject);
@@ -102,7 +86,6 @@ public class SysResourceService {
             }
             // 第一层
             jsonObject.put("id", availableMenu.getId().toString());
-//            jsonObject.put("checked", getCheckboxState(getAllResourceInfo, availableMenu.getId()));
             jsonObject.put("name", availableMenu.getName());
             jsonObject.put("children", childrenArr);
             jsonArray.put(jsonObject);
@@ -111,14 +94,6 @@ public class SysResourceService {
         return jsonArray;
     }
 
-//    public String getCheckboxState(List<SysResourceEntity> getAllResourceInfo,Long id){
-//        for(SysResourceEntity aEntity:getAllResourceInfo){
-//            if(aEntity.getId() == id){
-//                return aEntity.getChecked();
-//            }
-//        }
-//        return "";
-//    }
 
     public JSONObject checkJsonContailsEntity(SysResourceEntity resourceEntities,JSONArray jsonArray){
         for(Object jsonObject:jsonArray){
@@ -138,11 +113,77 @@ public class SysResourceService {
     public List<Long> getUserResourceId(Long rid){
         List<SysResourceEntity> listByUserId = sysResourceDao.listByUserId(rid);
         List<Long> result = new ArrayList<>();
+
         for(SysResourceEntity entity:listByUserId){
-            result.add(entity.getId());
+            if(!entity.getType().equals("menu")) {
+                result.add(entity.getId());
+            }
         }
 
         return result;
     }
+
+    /**
+     * 插入用户与资源对应关系
+     */
+    public Integer insertRoleResourceInfo(List<SysRoleResourceEntity> roleRes){
+        return sysRoleResourceDao.insertRoleResourceInfo(roleRes);
+    }
+
+    /**
+     * 更新时间
+     */
+    public Integer  updateRoleResourceInfo(SysRoleResourceEntity roleRes){
+        return sysRoleResourceDao.updateRoleResourceInfo(roleRes);
+    }
+
+    /**
+     * 保存用户与资源对应关系逻辑
+     */
+    public Integer saveRoleResourrceRelation(Long roleId,List<Long> nodeIds){
+        //获取所有权限
+        List<SysResourceEntity> listByUserId = listByUserId(roleId);
+        List<Long> result = new ArrayList<>();
+        for(SysResourceEntity entity:listByUserId) {
+            result.add(entity.getId());
+        }
+
+        // 通过节点id查询父亲节点
+        List<SysResourceEntity> listAllAvailableMenu = listAllAvailableMenu();
+        List<Long> allNodeList = new ArrayList<>();
+        for(Long item : nodeIds){
+            Long parentId = sysResourceDao.getParentNode(item).getParentId();
+            allNodeList.add(parentId);
+        }
+
+        List<Long> noDouble = allNodeList.stream().distinct().collect(Collectors.toList());
+        for(Long item : noDouble){
+            for(SysResourceEntity entity:listAllAvailableMenu){
+                if(item == entity.getNodeId()){
+                    nodeIds.add(entity.getId());
+                }
+            }
+        }
+        nodeIds.addAll(allNodeList);
+        System.out.println(allNodeList);
+
+        // get common list
+        Integer del = sysRoleResourceDao.deleteRoleResourceInfoByRoleId(roleId);
+        if(del == 0){
+            return 0;
+        }else{
+            List<SysRoleResourceEntity> insertInfoList = new ArrayList<>();
+            for(Long item:nodeIds){
+                SysRoleResourceEntity entity = new SysRoleResourceEntity();
+                entity.setRoleId(String.valueOf(roleId));
+                entity.setResourcesId(String.valueOf(item));
+                insertInfoList.add(entity);
+            }
+            Integer update = sysRoleResourceDao.insertRoleResourceInfo(insertInfoList);
+            return update;
+        }
+
+    }
+
 
 }

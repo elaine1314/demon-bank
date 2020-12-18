@@ -20,6 +20,16 @@ public interface SysRoleResourceDao {
      * 通过role_id获取资源
      */
     List<SysRoleResourceEntity> queryResourcesListWithSelected(@Param("rid") Long rid);
-
-
+    /**
+     * 插入用户与资源对应关系
+     */
+    Integer insertRoleResourceInfo(@Param("roleRes") List<SysRoleResourceEntity> roleRes);
+    /**
+     * 更新时间
+     */
+    Integer  updateRoleResourceInfo(@Param("roleRes") SysRoleResourceEntity roleRes);
+    /**
+    * 删除信息通过roleId
+    */
+    Integer deleteRoleResourceInfoByRoleId(@Param("roleId") Long roleId);
 }

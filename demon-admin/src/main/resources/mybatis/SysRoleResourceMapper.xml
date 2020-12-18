@@ -9,36 +9,47 @@
 		<result property="createTime" jdbcType="TIMESTAMP" column="create_time"/>
 		<result property="updateTime" jdbcType="TIMESTAMP" column="update_time"/>
 	</resultMap>
-	<select id="queryResourcesListWithSelected" parameterType="Long" resultMap="rm">
-		SELECT
-            re.id,
-            re.`name`,
-            re.parent_id,
-            re.url,
-            re.type,
-            re.icon,
-            (
-                CASE
-                WHEN EXISTS (
-                    SELECT
-                        1
-                    FROM
-                        sys_role_resources rr
-                    WHERE
-                        rr.resources_id = re.id
-                    AND rr.role_id = #{rid}
-                )
-                    THEN
-                        'true'
-                    ELSE
-                        'false'
-                    END
-            ) AS checked
-        FROM
-            sys_resources re
-        ORDER BY
-            re.sort ASC
-	</select>
+<!--	<select id="queryResourcesListWithSelected" parameterType="Long" resultMap="rm">-->
+<!--		SELECT-->
+<!--            re.id,-->
+<!--            re.`name`,-->
+<!--            re.parent_id,-->
+<!--            re.url,-->
+<!--            re.type,-->
+<!--            re.icon,-->
+<!--            (-->
+<!--                CASE-->
+<!--                WHEN EXISTS (-->
+<!--                    SELECT-->
+<!--                        1-->
+<!--                    FROM-->
+<!--                        sys_role_resources rr-->
+<!--                    WHERE-->
+<!--                        rr.resources_id = re.id-->
+<!--                    AND rr.role_id = #{rid}-->
+<!--                )-->
+<!--                    THEN-->
+<!--                        'true'-->
+<!--                    ELSE-->
+<!--                        'false'-->
+<!--                    END-->
+<!--            ) AS checked-->
+<!--        FROM-->
+<!--            sys_resources re-->
+<!--        ORDER BY-->
+<!--            re.sort ASC-->
+<!--	</select>-->
+    <insert id="insertRoleResourceInfo" parameterType="java.util.List">
+        INSERT INTO `sim_demon`.`sys_role_resources` (`role_id`, `resources_id`) VALUES <foreach collection="list" item="roleRes" index="index" separator=",">
+        (#{roleRes.roleId}, #{roleRes.resourcesId})
+	</foreach>
+    </insert>
+    <update id="updateRoleResourceInfo" parameterType="com.zxe.admin.entity.SysRoleResourceEntity">
+        UPDATE `sys_role_resources` SET `update_time` = #{roleRes.updateTime} WHERE `id` = #{roleRes.roleId};
+    </update>
+	<delete id="deleteRoleResourceInfoByRoleId" parameterType="Long">
+		DELETE from `sys_role_resources` where role_id = #{roleId}
+	</delete>
 
 </mapper>
 
