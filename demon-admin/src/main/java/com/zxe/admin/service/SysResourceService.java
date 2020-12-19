@@ -1,13 +1,11 @@
 package com.zxe.admin.service;
 
-import cn.hutool.json.JSON;
 import cn.hutool.json.JSONArray;
 import cn.hutool.json.JSONObject;
 import com.zxe.admin.dao.SysResourceDao;
 import com.zxe.admin.dao.SysRoleResourceDao;
 import com.zxe.admin.entity.SysResourceEntity;
 import com.zxe.admin.entity.SysRoleResourceEntity;
-import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -164,16 +162,20 @@ public class SysResourceService {
                 }
             }
         }
-        nodeIds.addAll(allNodeList);
-        System.out.println(allNodeList);
+        nodeIds.addAll(noDouble);
+        System.out.println(nodeIds.toString());
 
         // get common list
-        Integer del = sysRoleResourceDao.deleteRoleResourceInfoByRoleId(roleId);
+        Integer del = 1;
+        if(listByUserId.size() != 0) {
+            del = sysRoleResourceDao.deleteRoleResourceInfoByRoleId(roleId);
+        }
+
         if(del == 0){
             return 0;
         }else{
             List<SysRoleResourceEntity> insertInfoList = new ArrayList<>();
-            for(Long item:nodeIds){
+            for(Long item:nodeIds.stream().distinct().collect(Collectors.toList())){
                 SysRoleResourceEntity entity = new SysRoleResourceEntity();
                 entity.setRoleId(String.valueOf(roleId));
                 entity.setResourcesId(String.valueOf(item));

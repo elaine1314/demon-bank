@@ -40,8 +40,8 @@
 <!--            re.sort ASC-->
 <!--	</select>-->
     <insert id="insertRoleResourceInfo" parameterType="java.util.List">
-        INSERT INTO `sim_demon`.`sys_role_resources` (`role_id`, `resources_id`) VALUES <foreach collection="list" item="roleRes" index="index" separator=",">
-        (#{roleRes.roleId}, #{roleRes.resourcesId})
+        INSERT INTO `sim_demon`.`sys_role_resources` (`role_id`, `resources_id`) VALUES <foreach collection="roleRes" item="roRes" index="index" separator=",">
+        (#{roRes.roleId}, #{roRes.resourcesId})
 	</foreach>
     </insert>
     <update id="updateRoleResourceInfo" parameterType="com.zxe.admin.entity.SysRoleResourceEntity">
