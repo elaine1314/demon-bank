@@ -30,3 +30,6 @@ demon:
     expire: 60480000
     header: toke
 
+logging:
+  level:
+    root: debug
