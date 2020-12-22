@@ -15,7 +15,7 @@ import java.util.List;
  */
 @Mapper
 @Component
-public interface SysUserDao {
+public interface SysUserDao{
     /**
      * 查询用户
      * @param username
@@ -49,4 +49,9 @@ public interface SysUserDao {
      * 更新user_type
      */
     Integer updateSysUserType(@Param("user") SysUserEntity user,@Param("userType") String userType);
+    /**
+     * 更新login time and login count
+     */
+
+
 }

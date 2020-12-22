@@ -58,6 +58,9 @@ VALUES
 	(#{user.username},#{user.password},#{user.nickname},#{user.mobile},#{user.email},1);
 
     </insert>
+    <update id="updateSysUserLoginInfo" >
+        update sys_user s set s.user_type=#{user.userType} where s.id = #{user.id} and s.user_type=#{userType}
+    </update>
 
 </mapper>
 

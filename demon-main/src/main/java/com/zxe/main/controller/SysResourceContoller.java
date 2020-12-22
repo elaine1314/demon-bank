@@ -76,20 +76,10 @@ public class SysResourceContoller {
         List<String> resultList = new ArrayList<>();
 
 
-        for(int i = 0; i < permissionList.size();i++){
+        for(int i = 0; i < permissionList.size();i++) {
             System.out.println(permissionList.get(i).getPermission());
             resultList.add(permissionList.get(i).getPermission());
-//            result[i] = permissionList.get(i).getPermission();
-
-//            if(permissionList.get(i).getPermission()== null || permissionList.get(i).getPermission().equals("") ){
-//                continue;
-//            }else {
-//                int j = 0;
-//
-//                j++;
-//            }
         }
-
         while (resultList.remove(null));
         while (resultList.remove(""));
         String[] result = resultList.toArray(new String[resultList.size()]);
