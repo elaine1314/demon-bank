@@ -62,7 +62,6 @@ public class SysRoleContoller {
 
         SysRoleEntity roleEntity1 = sysRoleService.searchOneRoleByUseId(data.getLong("roleId"));
         UserTypeEnum userType = UserTypeEnum.getByType(roleEntity1.getDescription());
-        System.out.println(userType.toString());
         int flag = 0;
         if (userRoleEntity != null) {
             flag = sysRoleService.updateRolesInfo(roleEntity);

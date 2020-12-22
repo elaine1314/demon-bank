@@ -75,9 +75,7 @@ public class SysResourceContoller {
 
         List<String> resultList = new ArrayList<>();
 
-
         for(int i = 0; i < permissionList.size();i++) {
-            System.out.println(permissionList.get(i).getPermission());
             resultList.add(permissionList.get(i).getPermission());
         }
         while (resultList.remove(null));

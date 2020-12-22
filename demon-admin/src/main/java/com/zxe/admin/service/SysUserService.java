@@ -78,4 +78,12 @@ public class SysUserService {
     public Integer updateSysUserType(SysUserEntity entity,String userType){
         return sysUserDao.updateSysUserType(entity,userType);
     }
+    /**
+     * 更新用户login info
+     * @param
+     * @return
+     */
+    public Integer updateSysUserLoginInfo(SysUserEntity entity) {
+        return sysUserDao.updateSysUserLoginInfo(entity);
+    }
 }

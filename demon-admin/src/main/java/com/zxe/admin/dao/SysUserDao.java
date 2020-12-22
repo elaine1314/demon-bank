@@ -52,6 +52,7 @@ public interface SysUserDao{
     /**
      * 更新login time and login count
      */
+    Integer updateSysUserLoginInfo(@Param("user") SysUserEntity user);
 
 
 }

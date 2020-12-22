@@ -53,15 +53,24 @@
         DELETE from sys_user where id=#{id}
     </delete>
     <insert id="insertUserInfo" parameterType="com.zxe.admin.entity.SysUserEntity">
-        INSERT INTO `sys_user` (`username`, `password`, `nickname`, `mobile`, `email`,`status`)
+        INSERT INTO `sys_user` (`username`, `password`, `nickname`, `mobile`, `email`,`status`,`user_type`)
 VALUES
-	(#{user.username},#{user.password},#{user.nickname},#{user.mobile},#{user.email},1);
+	(#{user.username},#{user.password},#{user.nickname},#{user.mobile},#{user.email},1,#{user.userType});
 
     </insert>
-    <update id="updateSysUserLoginInfo" >
-        update sys_user s set s.user_type=#{user.userType} where s.id = #{user.id} and s.user_type=#{userType}
+    <update id="updateSysUserLoginInfo" parameterType="com.zxe.admin.entity.SysUserEntity">
+        UPDATE `sim_demon`.`sys_user` SET
+        <if test="user.avatar != null">
+        `avatar` = #{user.avatar},
+        </if>
+        <if test="user.lastLoginTime != null">
+        `last_login_time` = #{user.lastLoginTime},
+        </if>
+        <if test="user.loginCount != null">
+        `login_count` = #{user.loginCount}
+        </if>
+        WHERE `id` = #{user.id} ;
     </update>
-
 </mapper>
 
 

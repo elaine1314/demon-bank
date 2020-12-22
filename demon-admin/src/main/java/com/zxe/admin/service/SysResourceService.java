@@ -61,7 +61,6 @@ public class SysResourceService {
             // 第一层孩子
             JSONArray childrenArr = new JSONArray();
             JSONObject childrenObject = new JSONObject();
-            System.out.println(availableMenu.getNodeId());
             List<SysResourceEntity> chList = listMenuResourceByPid(availableMenu.getNodeId());
             JSONArray secChildrenArr = new JSONArray();
 
@@ -163,7 +162,6 @@ public class SysResourceService {
             }
         }
         nodeIds.addAll(noDouble);
-        System.out.println(nodeIds.toString());
 
         // get common list
         Integer del = 1;

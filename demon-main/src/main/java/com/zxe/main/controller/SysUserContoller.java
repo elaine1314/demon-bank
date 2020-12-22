@@ -98,6 +98,7 @@ public class SysUserContoller {
         user.setNickname(data.getStr("nickname"));
         user.setMobile(data.getStr("mobile"));
         user.setEmail(data.getStr("email"));
+        user.setUserType("USER");
 
         SysUserEntity userInfo = sysUserService.findUserInfo(data.getStr("username"));
         if (userInfo != null) {
@@ -113,6 +114,5 @@ public class SysUserContoller {
                 return Result.succ("插入失败");
             }
         }
-
     }
 }

@@ -7,6 +7,7 @@ import com.zxe.admin.entity.SysUserEntity;
 import com.zxe.admin.service.SysUserService;
 import com.zxe.admin.utils.JwtUtils;
 import com.zxe.common.Result;
+import com.zxe.common.utils.CommonUtils;
 import com.zxe.common.utils.PasswordUtils;
 import io.jsonwebtoken.Claims;
 import org.apache.shiro.SecurityUtils;
@@ -48,6 +49,16 @@ public class SysLoginController {
         response.setHeader("Access-control-Expose-Headers", "Authorization");
 
         Map<Object,Object> map  = MapUtil.builder().put("token", jwt).map();
+
+        // 更新登录信息
+        user.setLastLoginTime(CommonUtils.getCurrentTime());
+        user.setLoginCount(user.getLoginCount() + 1);
+        try{
+            sysUserService.updateSysUserLoginInfo(user);
+        }catch(Exception e) {
+            System.out.println(e);
+        }
+
         return Result.succ(map);
     }
 
